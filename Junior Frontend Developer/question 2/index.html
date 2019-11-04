@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 2</title>
+    <style>
+        td {
+            border: 1px solid black;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 5px;
+        }
+
+        td:first-child {
+            padding-left: 5px;
+            padding-right: 0;
+        }
+
+        td.checked input {
+            text-decoration: line-through;
+        }
+
+        td.action {
+            width: 170px;
+        }
+
+        td.checked~td>.done,
+        td.checked~td>.edit {
+            display: none;
+        }
+
+        table {
+            margin-top: 10px;
+        }
+
+        .action {
+            text-align: left;
+        }
+
+        .inputList {
+            border-width: 0;
+        }
+
+        input:disabled {
+            background-color: white;
+            border-width: 0;
+        }
+
+        #container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 0 15px;
+        }
+
+        #todo {
+            width: 200px;
+        }
+
+        .box {
+            text-align: center;
+        }
+
+        .remove,
+        .edit {
+            margin: 0 5px;
+        }
+
+        .done {
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Question #2 - Junior Level</h1>
+    <p>Create TODO app that include features Add, Edit, Delete, Mark done</p>
+    <div id="container">
+        <div class="box">
+            <span>TODO:</span>
+            <input type="text" name="todo" id="todo" placeholder="Enter what you want to do here...">
+            <button onclick="addTodo();">ADD</button>
+            <table id="todo_table" cellspacing="0">
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script>
+        // $(document).ready(function () {
+        //     var table = $('#todo_table');
+        // });
+        var id = 0
+
+        function addTodo() {
+            let todo = $('#todo');
+            let todoText = todo.val();
+            if (todoText === '') {
+                alert("You must write something!");
+            } else {
+                let index = $('#todo_table > tbody > tr').length + 1
+                $('#todo_table > tbody:last-child').append('<tr>\
+                    <td id="' + id + '"><span class="index">' + index + '. </span><input type="text" class="inputList" value="' + todoText + '"disabled></td>\
+                    <td class="action">\
+                        <span class="remove" onclick="removeMe(' + id + ')">Remove</span> \
+                        <span class="done" onclick="checkMe(' + id + ')"> | Done</span> \
+                        <span class="edit" onclick="edit(' + id + ',this)"> | Edit</span>\
+                    </td>\
+                    </tr>');
+                id++;
+                todo.val('');
+                todo.focus();
+            }
+        }
+
+        function removeMe(id) {
+            $('#' + id).parents().eq(0).remove();
+            renderIndex();
+        }
+
+        function checkMe(id) {
+            $('#' + id).addClass('checked');
+        }
+
+        function edit(id, button) {
+            let element = $('#' + id + '> input');
+            let isDisabled = element.is(':disabled');
+            if (isDisabled) {
+                element.prop("disabled", false);
+                element.focus();
+                button.textContent = 'Save';
+            } else {
+                element.prop("disabled", true);
+                button.textContent = 'Edit'
+            }
+
+        }
+
+        function renderIndex() {
+            let todoList = $('#todo_table > tbody').children();
+            todoList.each(function (row, value) {
+                $('.index', value).text(row + 1 + '. ')
+            });
+        }
+
+    </script>
+</body>
+
+</html>

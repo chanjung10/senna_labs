@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 3</title>
+</head>
+
+<body>
+    <h1>Question #3 - Junior Level</h1>
+    <p>There is an array with some numbers. All numbers are equal except for one. Try to find it! Using
+        Javascript write a function that returns the unique number inside the array.</p>
+    <p>Note : Input your data and intermediate with ","</p>
+    <p>Exaple : 1, 1, 1, 2, 1, 1 returns 2</p>
+    <p>Exaple2 : 0, 0, 0.55, 0, 0 returns 0.55 </p>
+    <span>Input array:</span>
+    <input type="text" name="inputText" id="inputArray">
+    <button onclick="toUnique();">Find</button>
+    <br>
+    <span>Unique : </span><span id="output"></span>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script>
+        function toUnique() {
+            let inputArray = $('#inputArray').val();
+            inputArray = inputArray.replace(/\s/g, '');
+            const array = inputArray.split(',');
+            const unique = arrToXOR(array);
+            $('#output').text(unique);
+        }
+
+        function arrToXOR(array) {
+            // 1. sort data.
+            array.sort()
+
+            // 2. clear null data.
+            let filtered = array.filter(function (el) {
+                return el != "";
+            });
+
+            // 3. check duplicate data.
+            let result = [];
+            array.forEach(function(element,index,theArray) {
+
+                var found = array.filter(function (element2) {
+                    return element2 == element;
+                });
+
+                if(found.length == 1){
+                    result.push(element);
+                } 
+            });
+
+            return result
+        }
+
+    </script>
+</body>
+
+</html>

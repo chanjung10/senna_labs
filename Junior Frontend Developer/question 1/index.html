@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 1</title>
+</head>
+
+<body>
+    <h1>Question #1 - Warm up</h1>
+    <p>We give you a JSON array like this:</p>
+    <code>
+        [
+            { "name": "rick", "cars": ["Corvette Z06", "Lotus Exite S"] },
+            { "name": "john", "cars": ["BMW 320D"] },
+            { "name": "zing", "cars": ["Honda Jazz", "Honda Click", "Honda Waves"] }
+        ]
+    </code>
+    <p>We want you to create function that process this json array and print out the results:</p>
+    <p>John want to buy BMW 320D</p>
+    <p>Rick want to buy Corvette Z06, Lotus Exite S</p>
+    <p>Zing want to buy Honda Jazz, Honda Click, Honda Waves</p>
+    <p>Note: please careful the order and capitalize of name!</p>
+    <textarea name="json" id="json" cols="30" rows="10"></textarea>
+    <button type="submit">Print</button>
+    <p>Order:</p>
+    <p id="order"></p>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script>
+        $('button').on('click', function (e) {
+            e.preventDefault;
+            var textarea = document.getElementById("json");
+
+            order = parseToJson(textarea.value)
+
+            $('#order').html(order);
+        });
+
+        function parseToJson(value) {
+            try {
+                var json = JSON.parse(value);
+            }
+            catch (error) {
+                if (error instanceof SyntaxError) {
+                    alert("There was a syntax error. Please correct it and try again: " + error.message);
+                }
+                else {
+                    throw error;
+                }
+            }
+
+            json = sortJsonOrder(json);
+
+            order = json.map(function (element) {
+                let text = capitalizeFirstLetter(element.name) + ' want to buy ';
+                element.cars.forEach(function (car, index) {
+                    text += (index == element.cars.length - 1) ? car : car + ', ';
+                });
+                text += '<br>';
+                return text;
+            });
+
+            return order;
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string[0].toUpperCase() + string.slice(1);
+        }
+
+        function sortJsonOrder(jsonOrder){
+            jsonOrder.sort(function (a, b) {
+                if (a['cars'][0] < b['cars'][0]) {
+                    return -1;
+                }
+                if (b['cars'][0] < a['cars'][0]) {
+                    return 1;
+                }
+                return 0;
+            });
+            return jsonOrder;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 3</title>
+    <style>
+        input {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Question #3 - Junior Level</h1>
+    <p>Write a method where the only parameter is a six digit thai lottery number. Given that number,
+        return and array with all 6 digit combinations where the last two numbers match the inputed
+        (winning) number.</p>
+    <p>Example: The winning number is 120888</p>
+    <p>The output array should have:</p>
+    <p>[ 000088, 000188, 000288, ….. Etc ]</p>
+
+    <input type="text" id="myDigit">
+    <input type='button' id='btnLoad' value='Print  ' onclick='combinations();'>
+    <p id="output"></p>
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
+    <script>
+
+        // Restrict input to digits and '.' by using a regular expression filter.
+        setInputFilter(document.getElementById("myDigit"), function (value) {
+            return /^\d*$/.test(value) && (value === "" || parseInt(value) <= 999999);
+        });
+
+        // Restricts input for the given textbox to the given inputFilter.
+        function setInputFilter(textbox, inputFilter) {
+            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+                textbox.oldValue = "";
+                textbox.addEventListener(event, function () {
+                    if (inputFilter(this.value)) {
+                        this.oldValue = this.value;
+                        this.oldSelectionStart = this.selectionStart;
+                        this.oldSelectionEnd = this.selectionEnd;
+                    } else if (this.hasOwnProperty("oldValue")) {
+                        this.value = this.oldValue;
+                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                    }
+                });
+            });
+        }
+
+        function combinations() {
+            $('#output').html('');
+            const fullDigit = $('#myDigit').val();
+            const lastTwo = fullDigit.slice(-2, fullDigit.length);
+            const firstFour = fullDigit.slice(0, 4)
+            const arrLoopDigit = firstFour.split('');
+            let unique = [...new Set(arrLoopDigit)];
+            unique.sort();
+            let combinations = [];
+            for (let i = 0; i < unique.length; i++) {
+                for (let j = 0; j < unique.length; j++) {
+                    for (let k = 0; k < unique.length; k++) {
+                        for (let l = 0; l < unique.length; l++) {
+                            digit = unique[i] + unique[j] + unique[k] + unique[l] + lastTwo;
+                            combinations.push(digit);
+                        }
+                    }
+                }
+            }
+            combinations.forEach(function (value, key) {
+                const output = (combinations.length == key + 1) ? value : value + ', ';
+                $('#output').append(output)
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 1</title>
+</head>
+
+<body>
+    <h1>Question #1 - Warm Up</h1>
+    <p>Write a function that takes a string as an argument and prints “Hello, [STRING]!”. So for
+        example, if you pass the string “Santa Claus”, the program will print “Hello, Santa Claus!”.</p>
+    <p>Hello, <span id="string">[STRING]!</span></p>
+    <input type="text" name="string">
+    <button type="submit">Print</button>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script>
+        $('button').on('click', function (e) {
+            e.preventDefault;
+            var string = $("[name='string']").val();
+            $('#string').text(string);
+        });
+    </script>
+</body>
+
+</html>

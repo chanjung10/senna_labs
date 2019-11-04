@@ -1,0 +1,32 @@
+Question #4 - Junior Level
+What are the benefits of using spread syntax and how is it different from rest syntax?
+
+Spread syntax เป็น การใช้สัญลักษณ์ ... เพื่อแปลง array หรือ string ออกมา โดยจะมี 3 รูปแบบการใช้งาน
+1. Function calls จะเป็นการ แปลงออกมาเพื่อผ่าน parameter ตามลำดับของ argument
+ตัวอย่าง
+	function myFunction(x, y, z) { }
+	var args = [0, 1, 2];
+	myFunction(...args);
+2. Array literals or strings จะเป็นการแปลง element แต่ละตัวที่อยู่ใน array หรือ string ออกมา 
+ตัวอย่าง
+	var parts = ['shoulders', 'knees']; 
+	var lyrics = ['head', ...parts, 'and', 'toes']; 
+	// ["head", "shoulders", "knees", "and", "toes"]
+3. Object expression โดยจะ แปลงออกมาในรูปแบบ key-value
+ตัวอย่าง
+	var obj1 = { foo: 'bar', x: 42 };
+	var obj2 = { foo: 'baz', y: 13 };
+
+	var clonedObj = { ...obj1 };
+	// Object { foo: "bar", x: 42 }
+
+	var mergedObj = { ...obj1, ...obj2 };
+	// Object { foo: "baz", x: 42, y: 13 }
+
+Rest syntax (parameters)
+มีความคล้ายกับ spread syntax แต่แตกต่างกันที่ Spread syntax จะทำการ แปลง array ไปเป็น element ที่อยู่ข้างใน แต่ rest syntax จะเป็นการแปลง element หลายๆตัว ให้ไปอยู่ในรูปแบบ array ตัวเดียว
+ตัวอย่าง
+	function f(a, b, ...theArgs) {
+  		// ...
+	}
+พารามิเตอร์สุดท้ายของฟังก์ชั่นสามารถนำหน้าด้วย ... ซึ่งจะทำให้อาร์กิวเมนต์ที่เหลือทั้งหมด จะถูกแปลงเป็น array เฉพาะพารามิเตอร์สุดท้ายเท่านั้นที่สามารถเป็น rest parameter ได้
